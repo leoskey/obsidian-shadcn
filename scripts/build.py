@@ -13,7 +13,9 @@ scoped = upstream + '\n' + appearance
 # A scope's root must use :scope explicitly; bare body selectors target descendants.
 scoped = re.sub(r'\bbody\b', ':scope', scoped)
 scoped = re.sub(r'(?<![\w:-])\.theme-(light|dark)', r':scope.theme-\1', scoped)
-css = '/* Shadcn by Clark Lei. See LICENSE and THIRD_PARTY_NOTICES.md. */\n'
+license_text = (ROOT / 'LICENSE').read_text().strip()
+css = '/*!\n' + license_text + '\n*/\n'
+css += '/* Shadcn by Clark Lei. See THIRD_PARTY_NOTICES.md for provenance. */\n'
 css += (ROOT / 'list.css').read_text()
 css += '\n@scope (body.shadcn-workspace) {\n' + scoped + '\n}\n'
 (ROOT / 'styles.css').write_text(css)

@@ -12,3 +12,5 @@ The adapted upstream stylesheet is preserved in `vendor/upstream-theme.css`. Nam
 Plugin integration, list functionality, and local customizations are maintained by Clark Lei.
 
 The generated installation ZIP includes the upstream license text in its root `LICENSE` so attribution remains available without the repository's vendor directory.
+
+The generated `styles.css` also embeds the complete MIT license and original copyright notice so installations that download only the three standard plugin assets retain the license text.

@@ -42,7 +42,19 @@ This Obsidian plugin combines a Shadcn-inspired appearance with a live local not
 
 ## 安装
 
-目前尚未提交 Obsidian 社区目录审核，请手动安装：
+### 通过 BRAT 安装
+
+当前正在准备标准 GitHub Release 草稿。**正式发布该 Release 后**，即可使用以下方式安装：
+
+1. 在 Obsidian 社区插件市场安装并启用 [BRAT](https://github.com/TfTHacker/obsidian42-brat)。
+2. 在 BRAT 设置中选择 **Add a beta plugin**，输入 `leoskey/obsidian-shadcn`，添加插件。
+3. 在第三方插件中启用 **Shadcn**，运行 **Shadcn: 打开全部笔记**。
+
+后续版本可由 BRAT 检查和安装更新。无需手动复制文件夹。Shadcn 本身不下载或更新代码。
+
+### 手动安装
+
+当前 ZIP 安装方式仍可使用。Obsidian 社区目录尚未提交，暂时不能在社区商店直接搜索安装 Shadcn。
 
 1. [下载安装包](https://github.com/leoskey/obsidian-shadcn/raw/refs/heads/main/downloads/shadcn-1.0.1.zip)，解压出 `shadcn-workspace` 文件夹。
 2. 将文件夹放入目标仓库的 `.obsidian/plugins/` 中。确认 `main.js`、`manifest.json`、`styles.css` 直接位于 `.obsidian/plugins/shadcn-workspace/`，避免多套一层目录。
@@ -80,11 +92,14 @@ node --check main.js
 node tests/plugin.test.cjs
 python3 scripts/build.py
 python3 scripts/build_demo.py
+python3 scripts/prepare_release.py
 ```
 
 最低支持版本为 Obsidian 1.8.7。桌面原生测试结果见 `TESTING.md`。移动端尚未实机验证。
 
 `build_demo.py` 会重建仓库内示例库的演示配置并生成示例 ZIP；它只处理 `examples/Shadcn示例库`。
+
+发布步骤与社区目录提交材料见 [PUBLISHING.md](PUBLISHING.md)。
 
 ## 许可与署名
 

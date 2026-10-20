@@ -1,0 +1,50 @@
+name: Prepare release draft
+
+on:
+  push:
+    tags:
+      - '[0-9]*.[0-9]*.[0-9]*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Validate plugin and build release assets
+        run: |
+          node --check main.js
+          node tests/plugin.test.cjs
+          python3 scripts/prepare_release.py
+      - name: Create or update draft only
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./manifest.json').version")
+          gh api "repos/$GH_REPO/git/ref/tags/$version" > /dev/null
+          if gh release view "$version" --json isDraft --jq .isDraft > release-state.txt 2>/dev/null; then
+            test "$(cat release-state.txt)" = true || { echo 'Refusing to replace an already published release.'; exit 1; }
+            gh release edit "$version" --title "$version" --notes-file RELEASE_NOTES.md
+            gh release upload "$version" "dist/release-$version/"* --clobber
+          else
+            gh release create "$version" "dist/release-$version/"* --draft --verify-tag --title "$version" --notes-file RELEASE_NOTES.md
+          fi
+          verify_dir="$RUNNER_TEMP/shadcn-release-verify"
+          gh release download "$version" --dir "$verify_dir"
+          cd "$verify_dir"
+          sha256sum --check SHA256SUMS.txt
+          gh release view "$version" --json url,isDraft,tagName,assets
