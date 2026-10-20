@@ -1,0 +1,2491 @@
+/* Shadcn Workspace by Clark Lei. See LICENSE and THIRD_PARTY_NOTICES.md. */
+.shadcn-note-database { width: 100%; margin: 0; color: var(--text-normal); }
+.shadcn-list-toolbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--background-modifier-border); min-height: 41px; gap: 14px; }
+.shadcn-list-tab { display: flex; align-items: center; gap: 7px; align-self: stretch; border-bottom: 2px solid var(--text-normal); padding: 6px 9px 10px; font-size: 14px; font-weight: 500; }
+.shadcn-control-icon { display: flex; align-items: center; }
+.shadcn-control-icon svg { width: 16px; height: 16px; }
+.shadcn-list-tools { display: flex; align-items: center; gap: 3px; padding-bottom: 8px; }
+.shadcn-note-database button { height: 29px; box-shadow: none; border-radius: 4px; font-family: var(--font-interface); font-size: 13px; }
+.shadcn-note-database .shadcn-text-control, .shadcn-note-database .shadcn-icon-control { color: var(--text-muted); background: transparent; border: 0; padding: 4px 8px; }
+.shadcn-note-database button.shadcn-text-control, .shadcn-note-database button.shadcn-icon-control { border: 0 !important; background: transparent !important; box-shadow: none !important; }
+.shadcn-note-database :is(.shadcn-text-control,.shadcn-icon-control):hover { background: var(--background-modifier-hover); }
+.shadcn-note-database .shadcn-add-note { color: #ffffff; background: var(--interactive-accent); border: 0; padding: 4px 15px; margin-left: 7px; }
+.shadcn-note-database .shadcn-add-note:hover { background: var(--interactive-accent-hover); }
+.shadcn-icon-control { display: inline-flex; align-items: center; justify-content: center; }
+.shadcn-icon-control svg { width: 16px; height: 16px; }
+.shadcn-note-row { display: grid; grid-template-columns: minmax(0,1fr) auto 158px; align-items: center; gap: 15px; min-height: 34px; padding: 4px 9px 4px 3px; border-radius: 3px; }
+.shadcn-note-row:hover, .shadcn-note-row:focus-within { background: var(--shadcn-row-hover); }
+.shadcn-note-row .shadcn-note-title { display: flex; min-width: 0; align-items: center; gap: 12px; color: var(--text-normal); text-decoration: none; border: 0; font-size: 14px; font-weight: 400; }
+.shadcn-note-row a.shadcn-note-title.internal-link { color: var(--text-normal) !important; text-decoration: none !important; border: 0 !important; }
+.shadcn-note-name { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.shadcn-page-icon { display: flex; flex: 0 0 18px; color: var(--text-muted); }
+.shadcn-page-icon svg { width: 18px; height: 18px; stroke-width: 1.6px; }
+.shadcn-note-tags { display: flex; gap: 5px; align-items: center; justify-content: flex-end; }
+.shadcn-gray-tag { color: var(--text-normal); background: var(--shadcn-tag-bg); border-radius: 3px; padding: 1px 6px; max-width: 100px; font-size: 11px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shadcn-note-date { text-align: right; white-space: nowrap; font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.shadcn-list-count { font-size: 11px; color: var(--text-muted); padding: 12px 3px; }
+.shadcn-list-filters { display: flex; flex-wrap: wrap; gap: 18px; padding: 12px 7px; background: var(--background-secondary); margin: 10px 0; border-radius: 4px; }
+.shadcn-list-filters[hidden], .shadcn-list-search[hidden] { display: none; }
+.shadcn-list-filters label { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
+.shadcn-list-filters select { min-width: 120px; font-size: 12px; }
+.shadcn-list-search { padding: 9px 0; }
+.shadcn-list-search input { width: 100%; font-size: 13px; }
+.shadcn-list-empty { padding: 50px 15px; text-align: center; color: var(--text-muted); font-size: 14px; }
+.shadcn-note-database :is(a,button,input,select):focus-visible { outline: 2px solid var(--interactive-accent); outline-offset: 2px; }
+.shadcn-new-note-form { display: flex; flex-direction: column; gap: 18px; }
+.shadcn-new-note-form label { display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+.shadcn-new-note-form input, .shadcn-new-note-form select { width: 100%; }
+@media (max-width: 1100px) {
+  .shadcn-list-page .markdown-preview-section { padding: 24px 28px 50px !important; }
+}
+@media (max-width: 700px) {
+  .shadcn-list-page { --file-margins: 22px 18px; }
+  .shadcn-note-row { grid-template-columns: minmax(0,1fr) auto; gap: 8px; }
+  .shadcn-note-date { display: none; }
+  .shadcn-gray-tag { max-width: 76px; }
+  .shadcn-list-tools { gap: 0; }
+  .shadcn-note-database .shadcn-text-control { padding-inline: 6px; }
+}
+
+@scope (body.shadcn-workspace) {
+/* =============================================================
+   Shadcn Workspace Style for Obsidian
+   Version: 1.0.0
+   Description: Full Shadcn visual overhaul — typography, code,
+                callouts, tables, and interactive elements.
+   ============================================================= */
+
+
+/* ─────────────────────────────────────────────────────────────
+   1. DESIGN TOKENS  (CSS Custom Properties)
+   All color / spacing / font values live here.
+   ───────────────────────────────────────────────────────────── */
+
+:scope.theme-light,
+:scope.theme-light {
+  /* ── Background layers ── */
+  --shadcn-bg-primary:       #ffffff;
+  --shadcn-bg-secondary:     #F9F8F7;   /* ← lighter (was #f7f6f3) */
+  --shadcn-bg-tertiary:      #f0efed;
+  --shadcn-bg-sidebar:       #F9F8F7;   /* ← lighter (was #f7f6f3) */
+  --shadcn-bg-hover:         rgba(55, 53, 47, 0.06);
+  --shadcn-bg-active:        rgba(55, 53, 47, 0.12);
+
+  /* ── Text ── */
+  --shadcn-text-primary:     #37352f;
+  --shadcn-text-secondary:   #787774;
+  --shadcn-text-tertiary:    #9b9a97;
+  --shadcn-text-placeholder: rgba(55, 53, 47, 0.40);
+  --shadcn-text-link:        #2382e2;
+
+  /* ── Borders / Dividers ── */
+  --shadcn-border:           rgba(55, 53, 47, 0.16);
+  --shadcn-border-strong:    rgba(55, 53, 47, 0.30);
+  --blockquote-border-thickness: 0px;
+
+  /* ── Code ── */
+  --shadcn-code-bg:          #ededeb;
+  --shadcn-code-border:      #ededeb;
+  --shadcn-code-text:        #eb5757;
+  --shadcn-codeblock-bg:     #f9f8f7;
+  --shadcn-codeblock-text:   #37352f;
+  --shadcn-codeblock-border: #f9f8f7;
+
+  /* ── Callout palette ── */
+  --shadcn-callout-info-bg:      #e7f3ff;
+  --shadcn-callout-info-border:  #2382e2;
+  --shadcn-callout-info-text:    #2c4a70;
+
+  --shadcn-callout-tip-bg:       #eefaf1;
+  --shadcn-callout-tip-border:   #0f9d58;
+  --shadcn-callout-tip-text:     #1a5c34;
+
+  --shadcn-callout-warn-bg:      #fff8e6;
+  --shadcn-callout-warn-border:  #f2a93b;
+  --shadcn-callout-warn-text:    #7a4d0f;
+
+  --shadcn-callout-error-bg:     #fff0f0;
+  --shadcn-callout-error-border: #e03e3e;
+  --shadcn-callout-error-text:   #7a1a1a;
+
+  --shadcn-callout-quote-bg:     #f7f6f3;
+  --shadcn-callout-quote-border: #9b9a97;
+  --shadcn-callout-quote-text:   #37352f;
+
+  /* ── Table ── */
+  --shadcn-table-header-bg:  #f7f6f3;
+  --shadcn-table-row-hover:  rgba(55, 53, 47, 0.04);
+  --shadcn-table-border:     rgba(55, 53, 47, 0.16);
+
+  /* ── Tags / Pills ── */
+  --shadcn-tag-bg:           rgba(227, 226, 224, 0.5);
+  --shadcn-tag-text:         #37352f;
+
+  /* ── Scrollbar ── */
+  --shadcn-scrollbar-bg:     transparent;
+  --shadcn-scrollbar-thumb:  rgba(55, 53, 47, 0.18);
+
+  /* ── Syntax highlighting (Obsidian native variables)
+     These are read by BOTH the CM6 editor and the Prism reading view,
+     so setting them once gives consistent colors everywhere.
+     Palette: Shadcn Workspace Style Light (via Typora shadcn-style-light theme). ── */
+  --code-background:   #f9f8f7;
+  --code-normal:       #37352f;   /* :scope text — same as shadcn text */
+  --code-comment:      #8d8d8d;   /* gray */
+  --code-function:     #d63253;   /* red-pink  — functions / defs */
+  --code-important:    #990055;   /* deep pink — class names / regex */
+  --code-keyword:      #006fd0;   /* blue      — keywords */
+  --code-operator:     #9a6e3b;   /* gold-brown — operators */
+  --code-property:     #990055;   /* deep pink — properties / attributes */
+  --code-punctuation:  #37352f;   /* same as normal */
+  --code-string:       #579c26;   /* green     — strings */
+  --code-tag:          #990055;   /* deep pink — HTML/XML tags */
+  --code-value:        #990055;   /* deep pink — numbers / atoms */
+}
+
+:scope.theme-dark,
+:scope.theme-dark {
+  /* ── Background layers ── */
+  --shadcn-bg-primary:       #191919;
+  --shadcn-bg-secondary:     #1f1f1f;
+  --shadcn-bg-tertiary:      #282828;
+  --shadcn-bg-sidebar:       #191919;   /* ← latest Shadcn dark: sidebar = content bg (unified) */
+  --shadcn-bg-hover:         rgba(255, 255, 255, 0.055);
+  --shadcn-bg-active:        rgba(255, 255, 255, 0.10);
+
+  /* ── Text ── */
+  --shadcn-text-primary:     rgba(255, 255, 255, 0.81);
+  --shadcn-text-secondary:   rgba(255, 255, 255, 0.50);
+  --shadcn-text-tertiary:    rgba(255, 255, 255, 0.35);
+  --shadcn-text-placeholder: rgba(255, 255, 255, 0.28);
+  --shadcn-text-link:        #529cca;
+
+  /* ── Borders / Dividers ── */
+  --shadcn-border:           rgba(255, 255, 255, 0.13);
+  --shadcn-border-strong:    rgba(255, 255, 255, 0.22);
+  --blockquote-border-thickness: 0px;
+
+  /* ── Code ── */
+  --shadcn-code-bg:          rgba(255, 255, 255, 0.06);
+  --shadcn-code-border:      rgba(255, 255, 255, 0.06); /* border = bg */
+  --shadcn-code-text:        #ff7b72;
+  --shadcn-codeblock-bg:     #202020;
+  --shadcn-codeblock-text:   rgba(255, 255, 255, 0.81);
+  --shadcn-codeblock-border: #202020;
+
+  /* ── Callout palette ── */
+  --shadcn-callout-info-bg:      rgba(83, 145, 210, 0.12);
+  --shadcn-callout-info-border:  #529cca;
+  --shadcn-callout-info-text:    #9cc4e4;
+
+  --shadcn-callout-tip-bg:       rgba(15, 157, 88, 0.10);
+  --shadcn-callout-tip-border:   #4ca16a;
+  --shadcn-callout-tip-text:     #81d8a4;
+
+  --shadcn-callout-warn-bg:      rgba(242, 169, 59, 0.10);
+  --shadcn-callout-warn-border:  #d4a050;
+  --shadcn-callout-warn-text:    #f0c070;
+
+  --shadcn-callout-error-bg:     rgba(224, 62, 62, 0.10);
+  --shadcn-callout-error-border: #d05050;
+  --shadcn-callout-error-text:   #f07070;
+
+  --shadcn-callout-quote-bg:     rgba(255, 255, 255, 0.04);
+  --shadcn-callout-quote-border: rgba(255, 255, 255, 0.25);
+  --shadcn-callout-quote-text:   rgba(255, 255, 255, 0.81);
+
+  /* ── Table ── */
+  --shadcn-table-header-bg:  rgba(255, 255, 255, 0.10);
+  --shadcn-table-row-hover:  rgba(255, 255, 255, 0.03);
+  --shadcn-table-border:     rgba(255, 255, 255, 0.10);
+
+  /* ── Tags / Pills ── */
+  --shadcn-tag-bg:           rgba(255, 255, 255, 0.08);
+  --shadcn-tag-text:         rgba(255, 255, 255, 0.65);
+
+  /* ── Scrollbar ── */
+  --shadcn-scrollbar-bg:     transparent;
+  --shadcn-scrollbar-thumb:  rgba(255, 255, 255, 0.15);
+
+  /* ── Syntax highlighting (Obsidian native variables)
+     Palette: Shadcn Workspace Style Dark (via Typora shadcn-style-dark theme). ── */
+  --code-background:   #202020;
+  --code-normal:       #dcdcdc;   /* off-white :scope */
+  --code-comment:      #998066;   /* muted brown */
+  --code-function:     #ecec93;   /* yellow      — functions / defs */
+  --code-important:    #e06c75;   /* soft red    — class names / regex */
+  --code-keyword:      #67a2cc;   /* blue        — keywords */
+  --code-operator:     #f5b73d;   /* amber       — operators */
+  --code-property:     #dcdcdc;   /* same as normal — properties */
+  --code-punctuation:  #dcdcdc;   /* same as normal */
+  --code-string:       #bde051;   /* green       — strings */
+  --code-tag:          #e06c75;   /* soft red    — HTML/XML tags */
+  --code-value:        #e06c75;   /* soft red    — numbers / atoms */
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   2. TYPOGRAPHY TOKENS → map to Obsidian's CSS variables
+   ───────────────────────────────────────────────────────────── */
+
+:scope.theme-light, :scope.theme-dark {
+  /* Font stack — mirrors Shadcn exactly */
+  --font-text-theme:   -apple-system, BlinkMacSystemFont, "Segoe UI",
+                       "Microsoft YaHei", "Noto Sans SC", "Microsoft JhengHei",
+                       "Noto Sans TC", "Meiryo", "Yu Gothic", "Noto Sans JP",
+                       "Malgun Gothic", "Noto Sans KR",
+                       "Apple Color Emoji", sans-serif,
+                       "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-monospace-theme: "SFMono-Regular", Menlo, Consolas, "PT Mono",
+                           "Liberation Mono", Courier, monospace;
+
+  /* Base scale */
+  --font-text-size:         16px;
+  --line-height-normal:     1.4;
+  --line-height-tight:      1.25;
+
+  /* Heading scale — H4/H5/H6 match H3 size (same as Typora shadcn theme) */
+  --h1-size: 1.875em;  /* 30px */
+  --h2-size: 1.5em;    /* 24px */
+  --h3-size: 1.25em;   /* 20px */
+  --h4-size: 1.25em;   /* 20px — same as H3 */
+  --h5-size: 1.25em;   /* 20px — same as H3 */
+  --h6-size: 1.25em;   /* 20px — same as H3 */
+
+  /* Spacing */
+  --shadcn-content-width:   1080px;  /* +20% (was 900px) */
+  --shadcn-page-padding:    96px;
+  --shadcn-page-padding-sm: 24px;
+
+  /* Obsidian native line-width — tells the editor the readable width */
+  --file-line-width:        1080px;  /* +20% (was 900px) */
+
+  /* Radius */
+  --shadcn-radius-sm:  3px;
+  --shadcn-radius-md:  6px;
+  --shadcn-radius-lg:  8px;
+
+  /* Transition */
+  --shadcn-transition: background 120ms ease-in, color 120ms ease-in;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   3. GLOBAL BASE
+   ───────────────────────────────────────────────────────────── */
+
+:scope {
+  font-family:   var(--font-text-theme);
+  font-size:     var(--font-text-size);
+  line-height:   var(--line-height-normal);
+  color:         var(--shadcn-text-primary);
+  background:    var(--shadcn-bg-primary);
+  -webkit-font-smoothing:  subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+}
+
+/* ─── Workspace chrome ─── */
+.workspace,
+.workspace-leaf,
+.workspace-split {
+  background: var(--shadcn-bg-primary);
+}
+
+.workspace-leaf-content {
+  background: var(--shadcn-bg-primary);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   4. SIDEBAR / NAVIGATION  (Shadcn-style file tree)
+   ───────────────────────────────────────────────────────────── */
+
+.nav-folder,
+.nav-file,
+.nav-files-container,
+.workspace-ribbon,
+.workspace-tabs,
+.nav-header,
+.nav-action-button,
+.nav-buttons-container,
+.workspace-leaf-resize-handle,
+.mod-left-split,
+.mod-right-split {
+  background: var(--shadcn-bg-sidebar);
+}
+
+
+/* ── File tree container ── */
+.nav-files-container {
+  padding: 4px 8px 4px 16px;
+}
+
+/* ── Hide Obsidian's native indentation guide lines ── */
+.nav-indentation-guide {
+  display: none;
+}
+.nav-files-container {
+  --nav-indentation-guide-width: 0px;
+}
+
+/* ── Common row styles ── */
+.nav-file-title,
+.nav-folder-title {
+  display:        flex;
+  align-items:    center;
+  min-height:     30px;
+  color:          var(--shadcn-text-primary);
+  font-size:      14px;
+  font-weight:    400;
+  line-height:    1.3;
+  border-radius:  4px;
+  transition:     background 80ms ease, color 80ms ease;
+  padding:        4px 6px 4px 8px;
+  margin:         1px 0;
+  cursor:         pointer;
+  user-select:    none;
+}
+
+.nav-file-title:hover,
+.nav-folder-title:hover {
+  background: var(--shadcn-bg-hover);
+  color:      var(--shadcn-text-primary);
+}
+
+.nav-file-title.is-active {
+  background:  var(--shadcn-bg-active);
+  font-weight: 500;
+}
+
+.nav-folder-title.is-active {
+  background: var(--shadcn-bg-hover);
+}
+
+/* ── Folder title content ── */
+.nav-folder-title-content {
+  font-weight: 500;
+  font-size:   14px;
+  color:       var(--shadcn-text-primary);
+}
+
+/* File title content */
+.nav-file-title-content {
+  font-size:   14px;
+  font-weight: 400;
+  color:       var(--shadcn-text-primary);
+  white-space: nowrap;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Collapse chevron ── */
+.nav-folder-collapse-indicator {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           20px;
+  height:          20px;
+  flex-shrink:     0;
+  color:           var(--shadcn-text-tertiary);
+  margin-right:    2px;
+  border-radius:   3px;
+}
+
+.nav-folder-collapse-indicator svg {
+  width:  14px;
+  height: 14px;
+  stroke: currentColor;
+}
+
+/* ── Page emoji icon for files ── */
+.nav-file-title::before {
+  content:      "📄";
+  font-size:    13px;
+  margin-right: 6px;
+  flex-shrink:  0;
+  opacity:      0.6;
+  line-height:  1;
+}
+
+.nav-file-title.is-active::before {
+  opacity: 1;
+}
+
+/* ── Section headings (Bookmarks, Files, etc.) ── */
+.nav-header {
+  padding:     8px 8px 4px;
+}
+
+.nav-header .nav-action-button {
+  background:  transparent;
+  color:       var(--shadcn-text-tertiary);
+  border:      none;
+  border-radius: 4px;
+  padding:     4px;
+  transition:  background 80ms ease;
+}
+
+.nav-header .nav-action-button:hover {
+  background: var(--shadcn-bg-hover);
+  color:      var(--shadcn-text-secondary);
+}
+
+/* ── Workspace header / vault title ── */
+.workspace-drawer.mod-left .workspace-tabs,
+.workspace-drawer.mod-right .workspace-tabs {
+  background: var(--shadcn-bg-sidebar);
+}
+
+/* ── Empty folder label ── */
+.nav-folder-children:empty::after {
+  content:   "No pages inside";
+  display:   block;
+  padding:   4px 8px;
+  font-size: 12px;
+  color:     var(--shadcn-text-placeholder);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   5. TAB BAR
+   ───────────────────────────────────────────────────────────── */
+
+.workspace-tab-header-container {
+  background:    var(--shadcn-bg-secondary);
+  border-bottom: 1px solid var(--shadcn-border);
+}
+
+.workspace-tab-header {
+  background:    transparent;
+  color:         var(--shadcn-text-secondary);
+  border-radius: var(--shadcn-radius-sm) var(--shadcn-radius-sm) 0 0;
+  font-size:     14px;
+  transition:    var(--shadcn-transition);
+}
+
+.workspace-tab-header:hover {
+  background: var(--shadcn-bg-hover);
+  color:      var(--shadcn-text-primary);
+}
+
+.workspace-tab-header.is-active {
+  background: var(--shadcn-bg-primary);
+  color:      var(--shadcn-text-primary);
+  font-weight: 500;
+}
+
+.workspace-tab-header-inner-title {
+  font-size: 14px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   6. EDITOR / READING PANE — Page Canvas
+   ───────────────────────────────────────────────────────────── */
+
+.markdown-source-view,
+.markdown-reading-view,
+.markdown-preview-view {
+  background: var(--shadcn-bg-primary);
+  color:      var(--shadcn-text-primary);
+}
+
+/* Center content and match Shadcn's page width */
+.markdown-preview-view .markdown-preview-section {
+  max-width: var(--shadcn-content-width);
+  padding:   40px var(--shadcn-page-padding) 80px;
+  margin:    0 auto;
+}
+
+/* Live-preview editor: constrain width and center the content block */
+.cm-editor .cm-content {
+  max-width: var(--shadcn-content-width);
+  padding:   0px var(--shadcn-page-padding) 80px;
+  margin:    0 auto;
+  box-sizing: border-box;
+}
+
+/* !! Reset: CM editors embedded inside table cells must NOT inherit
+   the page-level 40px/80px padding — that's what makes focused cells
+   expand to ~130px tall with the text appearing vertically centered. */
+.cm-embed-block .cm-editor .cm-content,
+.cm-table-widget .cm-editor .cm-content,
+td .cm-editor .cm-content {
+  max-width:  none;
+  padding:    0;
+  margin:     0;
+}
+
+/* Scrollable container alignment */
+.view-content {
+  background: var(--shadcn-bg-primary);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   7. HEADINGS  (H1 → H6 Shadcn gradient)
+   ───────────────────────────────────────────────────────────── */
+
+/* Reading view */
+.markdown-preview-view h1,
+.markdown-reading-view h1 {
+  font-size:      var(--h1-size);
+  font-weight:    700;
+  line-height:    1.2;
+  color:          var(--shadcn-text-primary);
+  margin-top:     3rem;
+  margin-bottom:  1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.markdown-preview-view h2,
+.markdown-reading-view h2 {
+  font-size:      var(--h2-size);
+  font-weight:    700;
+  line-height:    1.3;
+  color:          var(--shadcn-text-primary);
+  margin-top:     1.5rem;
+  margin-bottom:  1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.markdown-preview-view h3,
+.markdown-reading-view h3 {
+  font-size:     var(--h3-size);
+  font-weight:   700;
+  line-height:   1.3;
+  color:         var(--shadcn-text-primary);
+  margin-top:    1.5rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-preview-view h4,
+.markdown-reading-view h4,
+.markdown-preview-view h5,
+.markdown-reading-view h5,
+.markdown-preview-view h6,
+.markdown-reading-view h6 {
+  font-size:     var(--h4-size);  /* all same as H3 */
+  font-weight:   700;
+  line-height:   1.3;
+  color:         var(--shadcn-text-primary);
+  margin-top:    1rem;
+  margin-bottom: 0;
+}
+
+/* Live-preview editor headings — kept in sync with reading-view h1~h6 */
+.cm-header-1 { font-size: var(--h1-size); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: var(--shadcn-text-primary); }
+.cm-header-2 { font-size: var(--h2-size); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; color: var(--shadcn-text-primary); }
+.cm-header-3 { font-size: var(--h3-size); font-weight: 700; line-height: 1.3;                             color: var(--shadcn-text-primary); }
+.cm-header-4 { font-size: var(--h4-size); font-weight: 700; line-height: 1.3;                             color: var(--shadcn-text-primary); }
+.cm-header-5 { font-size: var(--h5-size); font-weight: 700; line-height: 1.3;                             color: var(--shadcn-text-primary); }
+.cm-header-6 { font-size: var(--h6-size); font-weight: 700; line-height: 1.3;                             color: var(--shadcn-text-primary); }
+
+/* Live-preview heading line spacing — mirrors reading-mode margin-top / margin-bottom.
+   padding-bottom provides the gap below a heading before content.
+   When two headings are consecutive, the second heading's padding-top is suppressed
+   so only the first heading's padding-bottom provides the single gap. */
+.cm-line:has(.cm-header-1) { padding-top: 3rem; padding-bottom: 1.5rem; }
+.cm-line:has(.cm-header-2) { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.cm-line:has(.cm-header-3) { padding-top: 1.5rem; padding-bottom: 1rem; }
+.cm-line:has(.cm-header-4),
+.cm-line:has(.cm-header-5),
+.cm-line:has(.cm-header-6) { padding-top: 1rem; padding-bottom: 0; }
+
+/* Consecutive headings (directly adjacent, no blank line between):
+   clear the second heading's padding-top — the first heading's padding-bottom alone
+   provides the gap. Uses a plain A+B adjacent-sibling selector (no nested :has). */
+.cm-line:has(:is(.cm-header-1,.cm-header-2,.cm-header-3,.cm-header-4,.cm-header-5,.cm-header-6)) + .cm-line:has(:is(.cm-header-1,.cm-header-2,.cm-header-3,.cm-header-4,.cm-header-5,.cm-header-6)) {
+  padding-top: 0;
+}
+
+/* Exception: no extra padding inside embed blocks or table cells */
+.cm-embed-block .cm-line:has(.cm-header-1),
+.cm-embed-block .cm-line:has(.cm-header-2),
+.cm-embed-block .cm-line:has(.cm-header-3),
+.cm-embed-block .cm-line:has(.cm-header-4),
+.cm-embed-block .cm-line:has(.cm-header-5),
+.cm-embed-block .cm-line:has(.cm-header-6) { padding-top: 0; padding-bottom: 0; }
+
+
+/* ─────────────────────────────────────────────────────────────
+   8. BODY TEXT & PARAGRAPHS
+   ───────────────────────────────────────────────────────────── */
+
+.markdown-preview-view p,
+.markdown-reading-view p {
+  line-height:   1.5;
+  color:         var(--shadcn-text-primary);
+  margin-top:    0.9em;
+  margin-bottom: 0.9em;
+}
+
+/* Strong / Bold */
+.markdown-preview-view strong,
+.markdown-reading-view strong,
+.cm-strong {
+  color:       var(--shadcn-text-primary);
+  font-weight: 600;
+}
+
+/* Italic / Emphasis */
+.markdown-preview-view em,
+.markdown-reading-view em,
+.cm-em {
+  color: var(--shadcn-text-primary);
+}
+
+/* Strikethrough */
+.markdown-preview-view s,
+.markdown-reading-view s,
+.cm-strikethrough {
+  color:           var(--shadcn-text-tertiary);
+  text-decoration: line-through;
+}
+
+/* Links */
+.markdown-preview-view a,
+.markdown-reading-view a {
+  color:           var(--shadcn-text-link);
+  text-decoration: none;
+  border-bottom:   1px solid transparent;
+  transition:      border-color 100ms ease;
+}
+
+.markdown-preview-view a:hover,
+.markdown-reading-view a:hover {
+  border-bottom-color: var(--shadcn-text-link);
+}
+
+/* Internal / wiki links */
+.internal-link {
+  color:           var(--shadcn-text-link);
+  text-decoration: none;
+}
+
+.internal-link:hover {
+  text-decoration: underline;
+}
+
+/* Horizontal rule */
+.markdown-preview-view hr,
+.markdown-reading-view hr {
+  border: none;
+  border-top: 1px solid var(--shadcn-border);
+  margin: 24px 0;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   9. INLINE CODE
+   ───────────────────────────────────────────────────────────── */
+
+.markdown-preview-view code:not(pre code),
+.markdown-reading-view  code:not(pre code),
+.markdown-source-view   code:not(pre code) {
+  background:    var(--shadcn-code-bg);
+  color:         var(--shadcn-code-text);
+  border:        1px solid var(--shadcn-code-border);
+  border-radius: var(--shadcn-radius-sm);
+  font-family:   var(--font-monospace-theme);
+  font-size:     0.875em;
+  padding:       0.15em 0.4em;
+  white-space:   nowrap;
+}
+
+/* Editor inline code */
+.cm-inline-code .cm-hmd-codeblock,
+span.cm-inline-code {
+  background:    var(--shadcn-code-bg);
+  color:         var(--shadcn-code-text);
+  border:        1px solid var(--shadcn-code-border);
+  border-radius: var(--shadcn-radius-sm);
+  font-family:   var(--font-monospace-theme);
+  font-size:     0.875em;
+  padding:       0.1em 0.35em;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   10. CODE BLOCKS (fenced)
+   ───────────────────────────────────────────────────────────── */
+
+.markdown-preview-view pre,
+.markdown-reading-view pre {
+  background:    var(--shadcn-codeblock-bg);
+  border:        none;
+  border-radius: var(--shadcn-radius-md);
+  padding:       38px 20px 16px; /* top: room for lang label */
+  margin:        12px 0;
+  overflow-x:    auto;
+  tab-size:      2;
+  position:      relative;
+}
+
+.markdown-preview-view pre code,
+.markdown-reading-view pre code {
+  background:    transparent;
+  color:         var(--shadcn-codeblock-text);
+  border:        none;
+  border-radius: 0;
+  font-family:   var(--font-monospace-theme);
+  font-size:     0.875em;
+  line-height:   1.7;
+  padding:       0;
+  white-space:   pre;
+}
+
+/* ── Language label (top-left) ──────────────────────────────
+   Prism adds the language class to BOTH <pre> and <code>,
+   so pre.language-java::before works directly.               */
+:is(.markdown-preview-view, .markdown-reading-view, .cm-embed-block)
+  pre[class*="language-"]::before {
+  position:       absolute;
+  top:            10px;
+  left:           16px;
+  font-size:      0.68em;
+  font-family:    var(--font-text-theme);
+  font-weight:    600;
+  color:          var(--shadcn-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  user-select:    none;
+  pointer-events: none;
+  line-height:    1;
+}
+
+/* ── Per-language display names ── */
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-bash::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-sh::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-shell::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-zsh::before    { content: "Shell"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-c::before      { content: "C"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-cpp::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-c\+\+::before  { content: "C++"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-csharp::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-cs::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-c\#::before     { content: "C#"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-css::before    { content: "CSS"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-dart::before   { content: "Dart"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-diff::before   { content: "Diff"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-docker::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-dockerfile::before { content: "Dockerfile"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-go::before     { content: "Go"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-graphql::before { content: "GraphQL"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-html::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-markup::before { content: "HTML"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-http::before   { content: "HTTP"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-java::before   { content: "Java"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-javascript::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-js::before     { content: "JavaScript"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-json::before   { content: "JSON"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-jsx::before    { content: "JSX"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-kotlin::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-kt::before     { content: "Kotlin"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-latex::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-tex::before    { content: "LaTeX"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-lua::before    { content: "Lua"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-makefile::before { content: "Makefile"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-markdown::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-md::before     { content: "Markdown"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-nginx::before  { content: "Nginx"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-php::before    { content: "PHP"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-plaintext::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-text::before   { content: "Plain Text"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-powershell::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-ps::before     { content: "PowerShell"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-python::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-py::before     { content: "Python"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-r::before      { content: "R"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-ruby::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-rb::before     { content: "Ruby"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-rust::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-rs::before     { content: "Rust"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-scala::before  { content: "Scala"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-scss::before   { content: "SCSS"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-sql::before    { content: "SQL"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-swift::before  { content: "Swift"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-toml::before   { content: "TOML"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-typescript::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-ts::before     { content: "TypeScript"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-tsx::before    { content: "TSX"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-vim::before    { content: "Vim Script"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-xml::before    { content: "XML"; }
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-yaml::before,
+:is(.markdown-preview-view,.markdown-reading-view,.cm-embed-block) pre.language-yml::before    { content: "YAML"; }
+
+/* ── Copy button (Obsidian built-in) ──
+   Obsidian injects .copy-code-button inside <pre>.
+   We reposition it to the top-right and keep it always visible
+   (fades in — matches Shadcn's UX pattern).                    */
+.markdown-preview-view .copy-code-button,
+.markdown-reading-view  .copy-code-button,
+pre .copy-code-button {
+  position:       absolute;
+  top:            5px;
+  right:          8px;
+  bottom:         auto;
+  left:           auto;
+  padding:        3px 8px;
+  border:         none;
+  border-radius:  var(--shadcn-radius-sm);
+  background:     transparent;
+  color:          var(--shadcn-text-tertiary);
+  font-size:      0.68em;
+  font-family:    var(--font-text-theme);
+  font-weight:    600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor:         pointer;
+  opacity:        0;
+  transition:     opacity 150ms ease, background 120ms, color 120ms;
+  white-space:    nowrap;
+}
+
+/* Show on pre hover */
+.markdown-preview-view pre:hover .copy-code-button,
+.markdown-reading-view  pre:hover .copy-code-button,
+pre:hover .copy-code-button {
+  opacity: 1;
+}
+
+.markdown-preview-view .copy-code-button:hover,
+.markdown-reading-view  .copy-code-button:hover,
+pre .copy-code-button:hover {
+  background: var(--shadcn-bg-hover);
+  color:      var(--shadcn-text-secondary);
+}
+
+/* "Copied!" feedback state */
+.markdown-preview-view .copy-code-button.mod-copied,
+.markdown-reading-view  .copy-code-button.mod-copied,
+pre .copy-code-button.mod-copied {
+  color:   var(--shadcn-callout-tip-border);
+  opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   10b. SYNTAX HIGHLIGHTING
+   Single source of truth: use var(--code-*) everywhere so that
+   Prism (reading view), CM6 (editor), and embed widgets always
+   show the same colors. --code-* values are set in section 1.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Prism tokens (reading view) ──
+   Rule ORDER matters when specificity is equal.
+   More specific / later-declared rules win.
+   General rules first → language-specific overrides last.
+
+   IMPORTANT: every rule must reset background + font-size to
+   prevent Prism/Obsidian default CSS from adding grey boxes or
+   shrinking individual tokens (the XML bug).                   */
+
+/* 0. Token reset — clears background/border/padding that Obsidian's
+      own Prism CSS adds to specific token types (e.g. .token.tag gets
+      a grey box in XML). Scoped inside pre so the selector is more
+      specific than Obsidian's ".token.tag { background }" rule.      */
+.markdown-preview-view pre .token,
+.markdown-reading-view  pre .token {
+  background:  transparent;
+  border:      none;
+  padding:     0;
+  font-size:   inherit;
+  line-height: inherit;
+}
+
+/* 1. comments, prolog, doctype, CDATA */
+:is(.markdown-preview-view, .markdown-reading-view) .token.comment,
+:is(.markdown-preview-view, .markdown-reading-view) .token.prolog,
+:is(.markdown-preview-view, .markdown-reading-view) .token.doctype,
+:is(.markdown-preview-view, .markdown-reading-view) .token.cdata {
+  color:      var(--code-comment);
+  font-style: italic;
+}
+
+/* 2. generic punctuation — lowest priority, overridden below */
+:is(.markdown-preview-view, .markdown-reading-view) .token.punctuation {
+  color: var(--code-punctuation);
+}
+
+/* 3. numbers, booleans */
+:is(.markdown-preview-view, .markdown-reading-view) .token.boolean,
+:is(.markdown-preview-view, .markdown-reading-view) .token.number,
+:is(.markdown-preview-view, .markdown-reading-view) .token.constant,
+:is(.markdown-preview-view, .markdown-reading-view) .token.symbol {
+  color: var(--code-value);
+}
+
+/* 4. strings, built-ins — includes C# interpolation-string ($"...") */
+:is(.markdown-preview-view, .markdown-reading-view) .token.string,
+:is(.markdown-preview-view, .markdown-reading-view) .token.char,
+:is(.markdown-preview-view, .markdown-reading-view) .token.builtin,
+:is(.markdown-preview-view, .markdown-reading-view) .token.selector,
+:is(.markdown-preview-view, .markdown-reading-view) .token.interpolation-string,
+:is(.markdown-preview-view, .markdown-reading-view) .language-css .token.string,
+:is(.markdown-preview-view, .markdown-reading-view) .style .token.string {
+  color: var(--code-string);
+}
+
+/* 5. keywords — includes C# multi-class keywords (keyword.keyword-using etc.) */
+:is(.markdown-preview-view, .markdown-reading-view) .token.keyword,
+:is(.markdown-preview-view, .markdown-reading-view) .token.atrule {
+  color:       var(--code-keyword);
+  font-weight: 500;
+}
+
+/* 6. operators, entities, URLs */
+:is(.markdown-preview-view, .markdown-reading-view) .token.operator,
+:is(.markdown-preview-view, .markdown-reading-view) .token.entity,
+:is(.markdown-preview-view, .markdown-reading-view) .token.url {
+  color: var(--code-operator);
+}
+
+/* 7. functions */
+:is(.markdown-preview-view, .markdown-reading-view) .token.function {
+  color: var(--code-function);
+}
+
+/* 8. class names, regex, variables — includes C# type-list (inheritance: Base, IFoo) */
+:is(.markdown-preview-view, .markdown-reading-view) .token.class-name,
+:is(.markdown-preview-view, .markdown-reading-view) .token.type-list,
+:is(.markdown-preview-view, .markdown-reading-view) .token.regex,
+:is(.markdown-preview-view, .markdown-reading-view) .token.important,
+:is(.markdown-preview-view, .markdown-reading-view) .token.variable {
+  color: var(--code-important);
+}
+
+/* 9. XML/HTML tags (property included for CSS) */
+:is(.markdown-preview-view, .markdown-reading-view) .token.property,
+:is(.markdown-preview-view, .markdown-reading-view) .token.tag {
+  color: var(--code-tag);
+}
+
+/* 10. XML/HTML attribute values */
+:is(.markdown-preview-view, .markdown-reading-view) .token.attr-value {
+  color: var(--code-string);
+}
+
+/* 11. XML/HTML attribute names */
+:is(.markdown-preview-view, .markdown-reading-view) .token.attr-name {
+  color: var(--code-function);
+}
+
+/* 12. Punctuation INSIDE attr-value */
+:is(.markdown-preview-view, .markdown-reading-view) .token.attr-value .token.punctuation,
+:is(.markdown-preview-view, .markdown-reading-view) .token.attr-value .token.punctuation.attr-equals {
+  color: var(--code-punctuation);
+}
+
+/* 13. XML namespace prefixes */
+:is(.markdown-preview-view, .markdown-reading-view) .token.namespace {
+  color:   var(--code-tag);
+  opacity: 0.8;
+}
+
+/* 14. C# preprocessor directives (#if, #define, #pragma …) */
+:is(.markdown-preview-view, .markdown-reading-view) .token.preprocessor,
+:is(.markdown-preview-view, .markdown-reading-view) .token.directive,
+:is(.markdown-preview-view, .markdown-reading-view) .token.directive-hash {
+  color: var(--code-keyword);
+}
+
+/* ── CM6 tokens (editor / live-preview) ──
+   Scoped broadly so they fire whether the cursor is inside or
+   outside the code block (widget vs. HyperMD line rendering). */
+.cm-comment { color: var(--code-comment); font-style: italic; }
+.cm-keyword,
+.cm-modifier { color: var(--code-keyword); font-weight: 500; }
+.cm-string,
+.cm-string2  { color: var(--code-string); }
+.cm-number,
+.cm-atom,
+.cm-bool     { color: var(--code-value); }
+.cm-className,
+.cm-typeName { color: var(--code-important); }
+.cm-function,
+.cm-definition.cm-variableName,
+.cm-variableName.cm-function { color: var(--code-function); }
+.cm-propertyName             { color: var(--code-property); }
+.cm-variableName,
+.cm-local                    { color: var(--code-normal); }
+.cm-operator                 { color: var(--code-operator); }
+.cm-meta,
+.cm-annotation               { color: var(--code-tag); }
+.cm-tagName,
+.cm-namespace                { color: var(--code-tag); }
+.cm-attributeName            { color: var(--code-function); } /* match Prism .token.attr-name */
+.cm-punctuation              { color: var(--code-punctuation); }
+
+/* ── CM6 code block line container ── */
+.cm-content .HyperMD-codeblock {
+  background:  var(--code-background);
+  color:       var(--code-normal);
+  font-family: var(--font-monospace-theme);
+  font-size:   0.875em;
+}
+
+.HyperMD-codeblock-begin,
+.HyperMD-codeblock-end {
+  background:    var(--code-background);
+  border-radius: var(--shadcn-radius-md);
+}
+
+/* ── Hide bracket-pair indent guides inside code blocks ── */
+.markdown-source-view.mod-cm6 .HyperMD-codeblock .cm-indent::before {
+  border-right: none;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   11. LISTS  (unordered + ordered + task lists)
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Unordered lists ── */
+.markdown-preview-view ul,
+.markdown-reading-view ul {
+  list-style:   none;
+  padding-left: 24px;
+  margin:       4px 0;
+}
+
+.markdown-preview-view ul > li,
+.markdown-reading-view ul > li {
+  position:    relative;
+  line-height: 1.5;
+  margin:      2px 0;
+  padding-left: 4px;
+}
+
+/* Hide Obsidian's native .list-bullet span to avoid double-bullet ghost */
+.markdown-preview-view ul > li > .list-bullet,
+.markdown-reading-view ul > li > .list-bullet {
+  display: none;
+}
+
+/* Shadcn's filled-circle bullet — level 1 */
+.markdown-preview-view ul > li::before,
+.markdown-reading-view ul > li::before {
+  content:     "•";
+  position:    absolute;
+  left:        -16px;
+  top:         0;
+  color:       var(--shadcn-text-primary);
+  font-size:   1em;
+  line-height: 1.6;
+}
+
+/* Level 2 — hollow circle */
+.markdown-preview-view ul ul > li::before,
+.markdown-reading-view ul ul > li::before {
+  content: "◦";
+  color:   var(--shadcn-text-secondary);
+}
+
+/* Level 3 — square */
+.markdown-preview-view ul ul ul > li::before,
+.markdown-reading-view ul ul ul > li::before {
+  content:   "▪";
+  font-size: 0.7em;
+  top:       0.15em;
+}
+
+/* ── Ordered lists ── */
+.markdown-preview-view ol,
+.markdown-reading-view ol {
+  padding-left: 24px;
+  margin:       4px 0;
+}
+
+.markdown-preview-view ol > li,
+.markdown-reading-view ol > li {
+  line-height:  1.5;
+  margin:       2px 0;
+  padding-left: 4px;
+  list-style:   decimal;
+  color:        var(--shadcn-text-primary);
+}
+
+/* Level 2 ordered — lower-alpha (a. b. c.) */
+.markdown-preview-view ol ol > li,
+.markdown-reading-view ol ol > li {
+  list-style: lower-alpha;
+}
+
+/* Level 3 ordered — lower-roman (i. ii. iii.) */
+.markdown-preview-view ol ol ol > li,
+.markdown-reading-view ol ol ol > li {
+  list-style: lower-roman;
+}
+
+/* ── Nested indent ── */
+.markdown-preview-view li ul,
+.markdown-preview-view li ol,
+.markdown-reading-view li ul,
+.markdown-reading-view li ol {
+  margin-top:    2px;
+  margin-bottom: 0;
+}
+
+/* ── Editor (live-preview) list rules ── */
+
+/* Unordered — hide native marker, use ::before bullets */
+.cm-content ul {
+  list-style:   none;
+  padding-left: 24px;
+  margin:       4px 0;
+}
+.cm-content ul > li {
+  position:     relative;
+  line-height:  1.5;
+  margin:       2px 0;
+  padding-left: 4px;
+}
+.cm-content ul > li > .list-bullet            { display: none; }
+.cm-content ul > li::before                   { content: "•";  position: absolute; left: -16px; top: 0; color: var(--shadcn-text-primary); font-size: 1em; line-height: 1.5; }
+.cm-content ul ul > li::before                { content: "◦";  color: var(--shadcn-text-secondary); }
+.cm-content ul ul ul > li::before             { content: "▪";  font-size: 0.7em; top: 0.15em; }
+
+/* Ordered — level 1 decimal, level 2 lower-alpha, level 3 lower-roman */
+.cm-content ol {
+  padding-left: 24px;
+  margin:       4px 0;
+}
+.cm-content ol > li {
+  line-height:  1.5;
+  margin:       2px 0;
+  padding-left: 4px;
+  list-style:   decimal;
+  color:        var(--shadcn-text-primary);
+}
+.cm-content ol ol > li    { list-style: lower-alpha; }
+.cm-content ol ol ol > li { list-style: lower-roman; }
+
+/* Nested spacing */
+.cm-content li ul,
+.cm-content li ol { margin-top: 2px; margin-bottom: 0; }
+
+/* ── Task list — editor (extends the same rules as reading view) ── */
+.markdown-source-view .task-list-item {
+  list-style:   none;
+  padding-left: 4px;
+}
+.markdown-source-view .task-list-item::before { display: none; }
+
+/* Checkbox appearance — editor */
+.markdown-source-view input[type="checkbox"] {
+  appearance:         none;
+  -webkit-appearance: none;
+  width:              16px;
+  height:             16px;
+  border:             1.5px solid var(--shadcn-border-strong);
+  border-radius:      3px;
+  margin-right:       6px;
+  vertical-align:     -3px;
+  cursor:             pointer;
+  background:         transparent;
+  transition:         background 120ms, border-color 120ms;
+  flex-shrink:        0;
+}
+.markdown-source-view input[type="checkbox"]:checked {
+  background:       #35aaff;
+  border-color:     #35aaff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9'%3E%3Cpath fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M1 4.5L4.5 8L11 1'/%3E%3C/svg%3E");
+  background-repeat:   no-repeat;
+  background-position: center;
+}
+/* Strikethrough text on checked task items */
+.markdown-source-view .task-list-item-checkbox:checked + * {
+  opacity:         0.6;
+  text-decoration: line-through;
+  color:           var(--shadcn-text-tertiary);
+}
+
+/* ── Blockquote in editor (HyperMD) ── */
+.cm-line.HyperMD-quote-1,
+.cm-line.HyperMD-quote-2,
+.cm-line.HyperMD-quote-3 {
+  border-left: 3px solid var(--shadcn-text-tertiary);
+  margin:      2px 0;
+  color:       var(--shadcn-text-primary);
+  font-style:  normal;
+}
+/* The `>` marker: keep it the same color as :scope text */
+.cm-line.HyperMD-quote-1 .cm-quote,
+.cm-line.HyperMD-quote-2 .cm-quote,
+.cm-line.HyperMD-quote-3 .cm-quote {
+  color: var(--shadcn-text-primary);
+}
+
+/* ── Horizontal rule in editor (HyperMD) ── */
+.cm-line.HyperMD-hr {
+  border:     none;
+  border-top: 1px solid var(--shadcn-border);
+  margin:     24px 0;
+  height:     1px;
+  overflow:   hidden;
+  color:      transparent;
+}
+.cm-line.HyperMD-hr .cm-hr {
+  opacity: 0;
+}
+
+/* ── Editor base line-height (ensures consistent :scope text) ── */
+.cm-editor .cm-content {
+  line-height: 1.5;
+}
+
+
+/* ── Task / Checkbox lists ── */
+
+/* 取消通用 ul 的 24px 缩进对 task list 的影响 */
+.markdown-preview-view ul.contains-task-list,
+.markdown-reading-view ul.contains-task-list {
+  padding-left: 0;
+}
+
+.markdown-preview-view .task-list-item,
+.markdown-reading-view .task-list-item {
+  list-style: none;
+  padding-left: 4px;
+  position:  static;
+}
+
+/* 高特异性选择器确保覆盖 Obsidian 自身的 align-items: flex-start */
+.markdown-preview-view ul.contains-task-list > li.task-list-item,
+.markdown-reading-view ul.contains-task-list > li.task-list-item {
+  display:      flex;
+  align-items:  center;
+}
+
+.markdown-preview-view .task-list-item::before,
+.markdown-reading-view .task-list-item::before {
+  display: none;
+}
+
+/* 消除 li 内部 p 标签的 margin，防止撑开导致错位 */
+.markdown-preview-view .task-list-item > p,
+.markdown-reading-view .task-list-item > p {
+  margin: 0;
+}
+
+.markdown-preview-view .task-list-item-checkbox,
+.markdown-reading-view .task-list-item-checkbox {
+  appearance:       none;
+  -webkit-appearance: none;
+  width:            16px;
+  height:           16px;
+  border:           1.5px solid var(--shadcn-border-strong);
+  border-radius:    3px;
+  margin:           0 6px 0 0;
+  cursor:           pointer;
+  background:       transparent;
+  transition:       background 120ms, border-color 120ms;
+  flex-shrink:      0;
+  align-self:       flex-start;
+  position:         relative;
+  top:              0.3em;
+}
+
+.markdown-preview-view .task-list-item-checkbox:checked,
+.markdown-reading-view .task-list-item-checkbox:checked {
+  background:    #35aaff;
+  border-color:  #35aaff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 12 9'%3E%3Cpath fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M1 4.5L4.5 8L11 1'/%3E%3C/svg%3E");
+  background-repeat:   no-repeat;
+  background-position: center;
+}
+
+.markdown-preview-view .task-list-item-checkbox:checked + *,
+.markdown-reading-view .task-list-item-checkbox:checked + * {
+  opacity:         0.6;
+  text-decoration: line-through;
+  color:           var(--shadcn-text-tertiary);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   12. BLOCKQUOTE
+   ───────────────────────────────────────────────────────────── */
+
+.markdown-preview-view blockquote,
+.markdown-reading-view blockquote {
+  border-left:   3px solid var(--shadcn-text-tertiary);
+  background:    transparent;
+  margin:        8px 0;
+  padding:       4px 16px;
+  color:         var(--shadcn-text-primary);
+  font-style:    normal;
+  border-radius: 0;
+}
+
+.markdown-preview-view blockquote p,
+.markdown-reading-view blockquote p {
+  color: var(--shadcn-text-primary);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   13. CALLOUTS / ADMONITIONS
+   Supports Obsidian's native callout syntax:
+   > [!info], [!tip], [!warning], [!danger], [!error],
+   > [!note], [!abstract], [!success], [!question], [!bug],
+   > [!example], [!quote], [!failure]
+   ───────────────────────────────────────────────────────────── */
+
+.markdown-preview-view .callout,
+.markdown-reading-view .callout {
+  border:        1px solid transparent;
+  border-left:   3px solid;
+  border-radius: var(--shadcn-radius-md);
+  padding:       12px 16px;
+  margin:        8px 0;
+  font-size:     0.9375em;
+}
+
+.callout-title {
+  display:      flex;
+  align-items:  center;
+  gap:          8px;
+  font-weight:  600;
+  font-size:    0.9375em;
+  margin-bottom: 6px;
+}
+
+.callout-content {
+  font-size:   0.9375em;
+  line-height: 1.6;
+}
+
+/* ── Info / Note ── */
+.callout[data-callout="info"],
+.callout[data-callout="note"] {
+  background:        var(--shadcn-callout-info-bg);
+  border-left-color: var(--shadcn-callout-info-border);
+  color:             var(--shadcn-callout-info-text);
+}
+.callout[data-callout="info"] .callout-title-inner,
+.callout[data-callout="note"] .callout-title-inner {
+  color: var(--shadcn-callout-info-border);
+}
+
+/* ── Tip / Success / Abstract ── */
+.callout[data-callout="tip"],
+.callout[data-callout="success"],
+.callout[data-callout="abstract"],
+.callout[data-callout="check"],
+.callout[data-callout="done"],
+.callout[data-callout="important"] {
+  background:        var(--shadcn-callout-tip-bg);
+  border-left-color: var(--shadcn-callout-tip-border);
+  color:             var(--shadcn-callout-tip-text);
+}
+.callout[data-callout="tip"] .callout-title-inner,
+.callout[data-callout="success"] .callout-title-inner,
+.callout[data-callout="important"] .callout-title-inner {
+  color: var(--shadcn-callout-tip-border);
+}
+
+/* ── Warning / Caution / Attention ── */
+.callout[data-callout="warning"],
+.callout[data-callout="caution"],
+.callout[data-callout="attention"],
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"] {
+  background:        var(--shadcn-callout-warn-bg);
+  border-left-color: var(--shadcn-callout-warn-border);
+  color:             var(--shadcn-callout-warn-text);
+}
+.callout[data-callout="warning"] .callout-title-inner {
+  color: var(--shadcn-callout-warn-border);
+}
+
+/* ── Error / Danger / Bug / Failure ── */
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="failure"],
+.callout[data-callout="fail"],
+.callout[data-callout="missing"] {
+  background:        var(--shadcn-callout-error-bg);
+  border-left-color: var(--shadcn-callout-error-border);
+  color:             var(--shadcn-callout-error-text);
+}
+.callout[data-callout="danger"] .callout-title-inner,
+.callout[data-callout="error"] .callout-title-inner {
+  color: var(--shadcn-callout-error-border);
+}
+
+/* ── Quote / Example ── */
+.callout[data-callout="quote"],
+.callout[data-callout="cite"],
+.callout[data-callout="example"] {
+  background:        var(--shadcn-callout-quote-bg);
+  border-left-color: var(--shadcn-callout-quote-border);
+  color:             var(--shadcn-callout-quote-text);
+}
+
+/* Callout icon */
+.callout-icon {
+  width:  18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Foldable callout arrow */
+.callout.is-collapsible .callout-title {
+  cursor: pointer;
+}
+
+.callout.is-collapsible .callout-fold {
+  margin-left: auto;
+  transition:  transform 150ms ease;
+}
+
+.callout.is-collapsed .callout-fold {
+  transform: rotate(-90deg);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   14. TABLES
+   ───────────────────────────────────────────────────────────── */
+
+.markdown-preview-view table,
+.markdown-reading-view table {
+  width:           100%;
+  border-collapse: collapse;
+  border-spacing:  0;
+  font-size:       0.9375em;
+  margin:          16px 0;
+  border:          none; /* outer border carried by cells below */
+}
+
+.markdown-preview-view th,
+.markdown-reading-view th {
+  background:    var(--shadcn-table-header-bg);
+  color:         var(--shadcn-text-primary);
+  font-weight:   700;
+  font-size:     0.9375em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding:       8px 12px;
+  border-top:    1px solid var(--shadcn-table-border); /* outer top */
+  border-bottom: 1px solid var(--shadcn-table-border);
+  border-right:  1px solid var(--shadcn-table-border);
+  /* text-align intentionally omitted — lets Markdown column alignment apply */
+}
+
+/* First cell in every row carries the outer left border */
+.markdown-preview-view th:first-child,
+.markdown-preview-view td:first-child,
+.markdown-reading-view th:first-child,
+.markdown-reading-view td:first-child {
+  border-left: 1px solid var(--shadcn-table-border);
+}
+
+.markdown-preview-view td,
+.markdown-reading-view td {
+  padding:        8px 12px;
+  border-bottom:  1px solid var(--shadcn-table-border);
+  border-right:   1px solid var(--shadcn-table-border);
+  color:          var(--shadcn-text-primary);
+  vertical-align: top;
+  line-height:    1.5;
+  /* text-align intentionally omitted — lets Markdown column alignment (:-:, --:) apply */
+}
+
+.markdown-preview-view tr:hover td,
+.markdown-reading-view tr:hover td {
+  background: var(--shadcn-table-row-hover);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   14b. TABLES — EDITOR / LIVE-PREVIEW
+   Strategy: padding lives on <td>/<th> directly (not on inner
+   wrappers). Inner editable elements get padding:0 so they fill
+   the fixed-size cell without stacking space.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Widget container ── */
+.cm-embed-block.cm-table-widget,
+.cm-table-widget {
+  width:    100%;
+  overflow: visible;
+}
+
+/* ── The <table> element ── */
+.cm-embed-block.cm-table-widget table,
+.cm-table-widget table,
+.markdown-source-view.mod-cm6 .cm-embed-block table {
+  width:           100%;
+  border-collapse: collapse;
+  border-spacing:  0;
+  font-size:       0.9375em;
+  margin:          0 0 16px; /* top:0 — the mandatory blank line above already provides spacing */
+  border:          none; /* outer border carried by cells below */
+}
+
+/* ── Header cells ── */
+.cm-embed-block.cm-table-widget th,
+.cm-table-widget th {
+  background:     var(--shadcn-table-header-bg);
+  color:          var(--shadcn-text-primary);
+  font-weight:    700;
+  font-size:      0.9375em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding:        8px 12px;
+  border-top:     1px solid var(--shadcn-table-border);
+  border-bottom:  1px solid var(--shadcn-table-border);
+  border-right:   1px solid var(--shadcn-table-border);
+  /* text-align omitted — lets Markdown alignment propagate */
+  vertical-align: top;
+  box-sizing:     border-box;
+}
+
+/* First cell in every row carries the outer left border */
+.cm-embed-block.cm-table-widget th:first-child,
+.cm-embed-block.cm-table-widget td:first-child,
+.cm-table-widget th:first-child,
+.cm-table-widget td:first-child {
+  border-left: 1px solid var(--shadcn-table-border);
+}
+
+/* ── Data cells ── */
+.cm-embed-block.cm-table-widget td,
+.cm-table-widget td {
+  padding:        8px 12px;
+  border-bottom:  1px solid var(--shadcn-table-border);
+  border-right:   1px solid var(--shadcn-table-border);
+  color:          var(--shadcn-text-primary);
+  vertical-align: top;
+  /* text-align omitted — lets Markdown alignment propagate */
+  box-sizing:     border-box;
+  line-height:    1.5;
+}
+
+/* ── Any direct child wrapper Obsidian inserts ──
+   (div, span, p — strip extra spacing so the td padding wins) */
+.cm-embed-block.cm-table-widget td > *,
+.cm-embed-block.cm-table-widget th > *,
+.cm-table-widget td > *,
+.cm-table-widget th > * {
+  padding:    0;
+  margin:     0;
+  text-align: inherit; /* inherit from parent td so column alignment works */
+}
+
+/* ── Obsidian table-editor classes (internal table editor) ── */
+.table-editor-table td,
+.table-editor-table th {
+  padding:        8px 12px;
+  vertical-align: top;
+  box-sizing:     border-box;
+  /* text-align omitted — Markdown alignment propagates via inline style */
+}
+
+.table-editor-cell,
+.table-editor-cell-content {
+  padding:    0;
+  margin:     0;
+  text-align: inherit;
+}
+
+/* ── Textarea / input inside any table cell ──
+   Must NOT add its own padding on top of the td's. */
+.cm-embed-block.cm-table-widget td textarea,
+.cm-embed-block.cm-table-widget td input,
+.cm-table-widget td textarea,
+.cm-table-widget td input,
+.table-editor-table td textarea,
+.table-editor-table td input {
+  padding:     0;
+  margin:      0;
+  border:      none;
+  outline:     none;
+  box-shadow:  none;
+  background:  transparent;
+  resize:      none;
+  text-align:  inherit; /* inherit column alignment from td */
+  vertical-align: top;
+  font-family: var(--font-text-theme);
+  font-size:   inherit;
+  line-height: 1.5;
+  color:       var(--shadcn-text-primary);
+  width:       100%;
+  min-height:  0;
+  height:      auto;
+  box-sizing:  border-box;
+  overflow:    hidden;
+}
+
+/* ── CM editor injected inside a focused table cell ──
+   Reset height/padding so the mini editor fits the content,
+   not the page-level dimensions.                           */
+.cm-embed-block td .cm-editor,
+.cm-table-widget td .cm-editor {
+  min-height: unset;
+  height:     auto;
+}
+
+.cm-embed-block td .cm-editor .cm-scroller,
+.cm-table-widget td .cm-editor .cm-scroller {
+  padding:    0;
+  min-height: 0;
+  overflow:   visible;
+}
+
+.cm-embed-block td .cm-editor .cm-line,
+.cm-table-widget td .cm-editor .cm-line {
+  padding: 0;
+}
+
+/* ── Focused cell highlight (inset so size never changes) ── */
+.cm-embed-block.cm-table-widget td:focus-within,
+.cm-table-widget td:focus-within {
+  outline:    none;
+  box-shadow: inset 0 0 0 1px rgba(35, 130, 226, 0.35);
+}
+
+/* ── Row hover ── */
+.cm-embed-block.cm-table-widget tr:hover td,
+.cm-table-widget tr:hover td {
+  background: var(--shadcn-table-row-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   14c. CODE INSIDE TABLE CELLS (editor widget)
+   The table widget renders <code> as plain HTML elements, not
+   as .cm-inline-code spans, so they need their own rule.
+   ───────────────────────────────────────────────────────────── */
+
+.cm-embed-block code:not(pre code),
+.cm-table-widget code:not(pre code) {
+  background:    var(--shadcn-code-bg);
+  color:         var(--shadcn-code-text);
+  border:        1px solid var(--shadcn-code-border);
+  border-radius: var(--shadcn-radius-sm);
+  font-family:   var(--font-monospace-theme);
+  font-size:     0.875em;
+  padding:       0.15em 0.4em;
+  white-space:   nowrap;
+}
+
+.cm-embed-block pre,
+.cm-table-widget pre {
+  background:    var(--shadcn-codeblock-bg);
+  border:        none;
+  border-radius: var(--shadcn-radius-md);
+  padding:       38px 20px 16px; /* top: room for lang label, matches reading view */
+  margin:        12px 0;
+  overflow-x:    auto;
+  position:      relative;
+}
+
+.cm-embed-block pre code,
+.cm-table-widget pre code {
+  background:  transparent;
+  color:       var(--shadcn-codeblock-text);
+  border:      none;
+  padding:     0;
+  font-family: var(--font-monospace-theme);
+  font-size:   0.875em;
+  line-height: 1.7;
+  white-space: pre;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   15. IMAGES & MEDIA
+   ───────────────────────────────────────────────────────────── */
+
+.markdown-preview-view img,
+.markdown-reading-view img {
+  border-radius:  var(--shadcn-radius-md);
+  max-width:      100%;
+  height:         auto;
+  display:        block;
+  margin:         8px 0;
+}
+
+/* Image captions */
+.markdown-preview-view img + em,
+.markdown-reading-view img + em {
+  display:    block;
+  text-align: center;
+  font-size:  0.8125em;
+  color:      var(--shadcn-text-tertiary);
+  margin-top: 4px;
+  font-style: normal;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   16. TAGS
+   ───────────────────────────────────────────────────────────── */
+
+.tag {
+  background:    var(--shadcn-tag-bg);
+  color:         var(--shadcn-tag-text);
+  border:        none;
+  border-radius: var(--shadcn-radius-sm);
+  font-size:     0.8125em;
+  padding:       2px 8px;
+  text-decoration: none;
+  transition:    background 100ms ease;
+}
+
+.tag:hover {
+  background: var(--shadcn-bg-active);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   17. SEARCH
+   ───────────────────────────────────────────────────────────── */
+
+.search-result-file-title {
+  color:       var(--shadcn-text-primary);
+  font-weight: 500;
+}
+
+.search-result-file-match {
+  color:     var(--shadcn-text-secondary);
+  font-size: 0.875em;
+}
+
+.search-result-file-match-text mark {
+  background: rgba(255, 212, 0, 0.25);
+  color:      var(--shadcn-text-primary);
+  border-radius: 2px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   18. MODAL / COMMAND PALETTE
+   ───────────────────────────────────────────────────────────── */
+
+.modal:not(.mod-settings),
+.prompt {
+  background:    var(--shadcn-bg-primary);
+  border:        1px solid var(--shadcn-border);
+  border-radius: var(--shadcn-radius-lg);
+  box-shadow:    rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+                 rgba(15, 15, 15, 0.1)  0px 3px 6px,
+                 rgba(15, 15, 15, 0.2)  0px 9px 24px;
+}
+
+.prompt-input {
+  background:    transparent;
+  border:        none;
+  border-bottom: 1px solid var(--shadcn-border);
+  border-radius: 0;
+  color:         var(--shadcn-text-primary);
+  font-size:     16px;
+  padding:       12px 16px;
+}
+
+.suggestion-item {
+  border-radius: var(--shadcn-radius-sm);
+  padding:       6px 12px;
+  font-size:     14px;
+  color:         var(--shadcn-text-primary);
+  transition:    var(--shadcn-transition);
+}
+
+.suggestion-item.is-selected,
+.suggestion-item:hover {
+  background: var(--shadcn-bg-hover);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   19. BUTTONS
+   ───────────────────────────────────────────────────────────── */
+
+.workspace button.mod-cta,
+.modal:not(.mod-settings) button.mod-cta {
+  background:    var(--interactive-accent);
+  color:         var(--text-on-accent);
+  border:        none;
+  border-radius: var(--shadcn-radius-sm);
+  font-weight:   500;
+  padding:       6px 14px;
+  cursor:        pointer;
+  transition:    opacity 100ms;
+}
+
+.workspace button.mod-cta:hover,
+.modal:not(.mod-settings) button.mod-cta:hover {
+  opacity: 0.85;
+}
+
+.workspace button:not(.mod-cta):not(.clickable-icon),
+.modal:not(.mod-settings) button:not(.mod-cta):not(.clickable-icon) {
+  border:        1px solid var(--shadcn-border);
+  border-radius: var(--shadcn-radius-sm);
+  background:    transparent;
+  color:         var(--shadcn-text-primary);
+  padding:       5px 12px;
+  cursor:        pointer;
+  transition:    var(--shadcn-transition);
+}
+
+.workspace button:not(.mod-cta):not(.clickable-icon):hover,
+.modal:not(.mod-settings) button:not(.mod-cta):not(.clickable-icon):hover {
+  background: var(--shadcn-bg-hover);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   20. TOOLBAR / RIBBON
+   ───────────────────────────────────────────────────────────── */
+
+.workspace-ribbon {
+  background: var(--shadcn-bg-sidebar);
+  border-right: 1px solid var(--shadcn-border);
+}
+
+.side-dock-ribbon-action {
+  color:         var(--shadcn-text-secondary);
+  border-radius: var(--shadcn-radius-sm);
+  transition:    var(--shadcn-transition);
+}
+
+.side-dock-ribbon-action:hover {
+  background: var(--shadcn-bg-hover);
+  color:      var(--shadcn-text-primary);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   21. STATUS BAR
+   ───────────────────────────────────────────────────────────── */
+
+.status-bar {
+  background:  var(--shadcn-bg-secondary);
+  border-top:  1px solid var(--shadcn-border);
+  color:       var(--shadcn-text-tertiary);
+  font-size:   12px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   22. SCROLLBARS
+   ───────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width:  6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--shadcn-scrollbar-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background:    var(--shadcn-scrollbar-thumb);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--shadcn-border-strong);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   23. SELECTION HIGHLIGHT
+   ───────────────────────────────────────────────────────────── */
+
+::selection {
+  background: rgba(35, 130, 226, 0.18);
+  color:      inherit;
+}
+
+:scope.theme-dark ::selection {
+  background: rgba(82, 156, 202, 0.25);
+}
+
+/* Editor text selection */
+.cm-editor .cm-selectionBackground {
+  background: rgba(35, 130, 226, 0.15);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   24. FRONT-MATTER / PROPERTIES PANEL
+   ───────────────────────────────────────────────────────────── */
+
+.metadata-container {
+  background:    var(--shadcn-bg-secondary);
+  border:        1px solid var(--shadcn-border);
+  border-radius: var(--shadcn-radius-md);
+  padding:       12px 16px;
+  margin-bottom: 24px;
+  font-size:     0.875em;
+  box-sizing:    border-box;
+  width:         100%;
+}
+
+/* In editing mode the metadata container sits outside .cm-content,
+   so constrain it to match the :scope text column width exactly.
+   width: calc(100% - padding*2) handles panels narrower than max-width;
+   max-width caps it at the same column width as the :scope text. */
+.markdown-source-view .metadata-container {
+  width:         calc(100% - var(--shadcn-page-padding) * 2);
+  max-width:     calc(var(--shadcn-content-width) - var(--shadcn-page-padding) * 2);
+  margin-left:   auto;
+  margin-right:  auto;
+  margin-bottom: 12px;
+}
+
+.metadata-property-key {
+  color:       var(--shadcn-text-secondary);
+  font-weight: 500;
+  font-size:   0.8125em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border:      none;
+  /* Increase key column width ~10% over Obsidian's default (~10em) */
+  flex:        0 0 11em;
+  min-width:   11em;
+}
+
+.metadata-property-key input.metadata-property-key-input,
+.metadata-property-key input.metadata-property-key-input:hover,
+.metadata-property-key input.metadata-property-key-input:focus,
+.metadata-property-key input.metadata-property-key-input:focus-within,
+.workspace .metadata-property-key input[type="text"] {
+  border:     none;
+  outline:    none;
+  box-shadow: none;
+  background: transparent;
+  padding:    0;
+}
+
+.metadata-property-key,
+.metadata-property-key:hover,
+.metadata-property-key:focus,
+.metadata-property-key:focus-within {
+  border:     none;
+  outline:    none;
+  box-shadow: none;
+}
+
+.metadata-property-value {
+  color: var(--shadcn-text-primary);
+}
+
+/* Tag pills inside metadata properties */
+.multi-select-pill,
+.metadata-property-value .multi-select-pill,
+.metadata-content .multi-select-pill {
+  border:     none;
+  outline:    none;
+  box-shadow: none;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   25. PAGE TITLE (inline editor title)
+   ───────────────────────────────────────────────────────────── */
+
+/* Common title style — both modes */
+.inline-title {
+  font-size:      2.5em;
+  font-weight:    700;
+  line-height:    1.2;
+  color:          var(--shadcn-text-primary);
+  letter-spacing: -0.02em;
+  padding-bottom: 8px;
+  border-bottom:  1px solid var(--shadcn-border);
+  margin-bottom:  24px;
+  font-family:    var(--font-text-theme);
+  display:        block;
+  box-sizing:     border-box;
+}
+
+/* Editing mode: title sits outside .cm-content, needs its own
+   padding + width to align with the :scope text column */
+.markdown-source-view .inline-title {
+  padding-top:   40px;
+  padding-left:  var(--shadcn-page-padding);
+  padding-right: var(--shadcn-page-padding);
+  max-width:     var(--shadcn-content-width);
+  margin-left:   auto;
+  margin-right:  auto;
+  width:         100%;
+  /* border-bottom would span the full 1080px element width (including
+     padding), so replace it with a pseudo-element that starts/ends at
+     the padding edges, matching the :scope text column exactly.        */
+  border-bottom: none;
+  position:      relative;
+}
+
+.markdown-source-view .inline-title::after {
+  content:    "";
+  display:    block;
+  position:   absolute;
+  bottom:     0;
+  left:       var(--shadcn-page-padding);
+  right:      var(--shadcn-page-padding);
+  height:     1px;
+  background: var(--shadcn-border);
+}
+
+.view-header-title {
+  font-size:   14px;
+  font-weight: 500;
+  color:       var(--shadcn-text-primary);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   26. GRAPH VIEW
+   ───────────────────────────────────────────────────────────── */
+
+.graph-view.color-circle,
+.graph-view.color-fill-highlight,
+.graph-view.color-line-highlight {
+  color: var(--shadcn-text-link);
+}
+
+
+
+/* ─────────────────────────────────────────────────────────────
+   28. INPUT FIELDS
+   ───────────────────────────────────────────────────────────── */
+
+.workspace input[type="text"],
+.workspace input[type="search"],
+.workspace input[type="email"],
+.workspace input[type="password"],
+.workspace textarea,
+.workspace select,
+.modal:not(.mod-settings) input[type="text"],
+.modal:not(.mod-settings) input[type="search"],
+.modal:not(.mod-settings) textarea {
+  background:    var(--shadcn-bg-secondary);
+  border:        1px solid var(--shadcn-border);
+  border-radius: var(--shadcn-radius-sm);
+  color:         var(--shadcn-text-primary);
+  font-family:   var(--font-text-theme);
+  font-size:     14px;
+  padding:       6px 10px;
+  transition:    border-color 120ms;
+}
+
+.workspace input[type="text"]:focus,
+.workspace input[type="search"]:focus,
+.workspace textarea:focus,
+.modal:not(.mod-settings) input[type="text"]:focus,
+.modal:not(.mod-settings) input[type="search"]:focus,
+.modal:not(.mod-settings) textarea:focus {
+  border-color: var(--shadcn-text-link);
+  outline:      none;
+  box-shadow:   0 0 0 2px rgba(35, 130, 226, 0.15);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   29. DIVIDERS
+   ───────────────────────────────────────────────────────────── */
+
+.workspace-split.mod-vertical > .workspace-split-child:not(:last-child),
+.workspace-split.mod-horizontal > .workspace-split-child:not(:last-child) {
+  border-right:  1px solid var(--shadcn-border);
+  border-bottom: 1px solid var(--shadcn-border);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   30. MOBILE RESPONSIVE
+   ───────────────────────────────────────────────────────────── */
+
+@media screen and (max-width: 768px) {
+  .markdown-preview-view .markdown-preview-section {
+    padding: 24px var(--shadcn-page-padding-sm) 60px;
+  }
+
+  .cm-editor .cm-content {
+    padding: 24px var(--shadcn-page-padding-sm) 60px;
+  }
+
+  .markdown-preview-view h1,
+  .markdown-reading-view h1,
+  .cm-header-1 {
+    font-size: 1.5em; /* 24px on mobile */
+  }
+
+  .markdown-preview-view h2,
+  .markdown-reading-view h2,
+  .cm-header-2 {
+    font-size: 1.25em;
+  }
+
+  .markdown-preview-view h3,
+  .markdown-reading-view h3,
+  .cm-header-3 {
+    font-size: 1.125em;
+  }
+
+  .inline-title {
+    font-size: 1.875em;
+  }
+
+  /* Edit-mode title + metadata: match reading-mode layout on mobile */
+  .markdown-source-view .inline-title {
+    padding-top:   24px;
+    padding-left:  var(--shadcn-page-padding-sm);
+    padding-right: var(--shadcn-page-padding-sm);
+    max-width:     100%;
+  }
+
+  .markdown-source-view .inline-title::after {
+    left:  var(--shadcn-page-padding-sm);
+    right: var(--shadcn-page-padding-sm);
+  }
+
+  .markdown-source-view .metadata-container {
+    width:        auto;
+    max-width:    100%;
+    margin-left:  var(--shadcn-page-padding-sm);
+    margin-right: var(--shadcn-page-padding-sm);
+  }
+
+  /* Stack nav full width */
+  .nav-file-title,
+  .nav-folder-title {
+    font-size:  15px;
+    min-height: 34px;
+    padding:    5px 10px 5px 10px;
+  }
+
+  table {
+    display:    block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .markdown-preview-view .markdown-preview-section {
+    padding: 16px 16px 48px;
+  }
+
+  .cm-editor .cm-content {
+    padding: 16px 16px 48px;
+  }
+
+  .markdown-source-view .inline-title {
+    padding-top:   16px;
+    padding-left:  16px;
+    padding-right: 16px;
+  }
+
+  .markdown-source-view .inline-title::after {
+    left:  16px;
+    right: 16px;
+  }
+
+  .markdown-source-view .metadata-container {
+    margin-left:  16px;
+    margin-right: 16px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   31. MERMAID DIAGRAMS
+   ───────────────────────────────────────────────────────────── */
+
+/* In reading mode, global line-height / font-size / font-family rules
+   bleed into Mermaid's foreignObject HTML content.
+   Mermaid pre-calculates fixed node dimensions — if the rendered text
+   is taller/wider than expected the content gets clipped.
+   Fix: reset all potentially conflicting properties inside .mermaid. */
+
+.markdown-preview-view .mermaid,
+.markdown-reading-view .mermaid {
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+  font-size:   14px;
+  line-height: normal;
+}
+
+/* foreignObject clips via SVG attribute overflow="hidden";
+   override with CSS to prevent text cut-off */
+.markdown-preview-view .mermaid foreignObject,
+.markdown-reading-view .mermaid foreignObject {
+  overflow: visible;
+}
+
+/* Reset global theme rules that bleed into node label divs */
+.markdown-preview-view .mermaid foreignObject div,
+.markdown-preview-view .mermaid foreignObject p,
+.markdown-preview-view .mermaid foreignObject span,
+.markdown-reading-view .mermaid foreignObject div,
+.markdown-reading-view .mermaid foreignObject p,
+.markdown-reading-view .mermaid foreignObject span {
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+  font-size:   14px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+/* Vertically center label text within foreignObject */
+.markdown-preview-view .mermaid foreignObject > div,
+.markdown-reading-view .mermaid foreignObject > div {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  height:          100%;
+}
+
+.mermaid svg {
+  overflow: visible;
+  max-width: 100%;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   32. MISCELLANEOUS POLISH
+   ───────────────────────────────────────────────────────────── */
+
+/* Remove heavy box shadows on panes */
+.workspace-leaf {
+  box-shadow: none;
+}
+
+/* Focus outline — only for genuinely interactive controls */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[role="link"]:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+  outline:        2px solid var(--shadcn-text-link);
+  outline-offset: 2px;
+}
+
+/* Headings and inline title: never show focus ring */
+h1:focus, h1:focus-visible,
+h2:focus, h2:focus-visible,
+h3:focus, h3:focus-visible,
+h4:focus, h4:focus-visible,
+h5:focus, h5:focus-visible,
+h6:focus, h6:focus-visible,
+.inline-title:focus,
+.inline-title:focus-visible,
+.metadata-container:focus,
+.metadata-container:focus-visible {
+  outline:    none;
+  box-shadow: none;
+}
+
+/* Strip CodeMirror's own focus ring entirely */
+.cm-editor.cm-focused {
+  outline: none;
+}
+
+.cm-editor:focus,
+.cm-editor:focus-visible,
+.cm-content:focus,
+.cm-content:focus-visible,
+.cm-scroller:focus,
+.cm-scroller:focus-visible {
+  outline:    none;
+  box-shadow: none;
+}
+
+/* Ensure code font in source mode */
+.cm-editor {
+  font-family: var(--font-text-theme);
+}
+
+/* Cursor color */
+.cm-editor .cm-cursor {
+  border-left-color: var(--shadcn-text-primary);
+}
+
+/* Word count / status indicators */
+.status-bar-item {
+  color: var(--shadcn-text-tertiary);
+}
+
+/* Folder collapse indicator SVG color */
+.nav-folder-collapse-indicator svg {
+  stroke: var(--shadcn-text-tertiary);
+}
+
+/* Workspace split resize handle */
+.workspace-leaf-resize-handle {
+  background: transparent;
+}
+
+.workspace-leaf-resize-handle:hover {
+  background: var(--shadcn-border);
+}
+
+/* ── End of Shadcn Workspace Style ── */
+
+/* Screenshot-specific refinements. Native controls and focus states stay available. */
+:scope.theme-light {
+  --background-primary: #ffffff;
+  --background-primary-alt: #fafafa;
+  --background-secondary: #f7f7f5;
+  --background-secondary-alt: #f1f1ef;
+  --background-modifier-border: #ececea;
+  --background-modifier-hover: #efefed;
+  --text-normal: #37352f;
+  --text-muted: #75746f;
+  --text-faint: #8b8983;
+  --text-accent: #2d76bc;
+  --text-accent-hover: #215e99;
+  --interactive-accent: #2e83cf;
+  --interactive-accent-hover: #2575b8;
+  --nav-item-color: #73726e;
+  --nav-item-color-active: #37352f;
+  --nav-item-background-active: #ebebea;
+  --nav-item-background-hover: #efefed;
+  --tag-background: #f0efed;
+  --tag-color: #54534e;
+  --tag-border-width: 0px;
+  --code-background: #f6f5f3;
+  --code-normal: #d85151;
+  --shadcn-row-hover: #f7f7f5;
+  --shadcn-tag-bg: #f0efed;
+}
+:scope.theme-dark {
+  --background-primary: #191919;
+  --background-primary-alt: #202020;
+  --background-secondary: #202020;
+  --background-secondary-alt: #252525;
+  --background-modifier-border: #343434;
+  --background-modifier-hover: #2d2d2d;
+  --text-normal: #e2e0dc;
+  --text-muted: #aaa8a2;
+  --text-faint: #92908a;
+  --text-accent: #8ab9e3;
+  --interactive-accent: #2e83cf;
+  --interactive-accent-hover: #2575b8;
+  --nav-item-color: #b2b0aa;
+  --nav-item-color-active: #e2e0dc;
+  --nav-item-background-active: #303030;
+  --nav-item-background-hover: #2a2a2a;
+  --tag-background: #303030;
+  --tag-color: #d0cec8;
+  --code-background: #252525;
+  --shadcn-row-hover: #242424;
+  --shadcn-tag-bg: #303030;
+}
+:scope {
+  --font-text: "PingFang SC", "Helvetica Neue", "Noto Sans CJK SC", sans-serif;
+  --font-text-theme: "PingFang SC", "Helvetica Neue", "Noto Sans CJK SC", sans-serif;
+  --font-interface-theme: "PingFang SC", "Helvetica Neue", sans-serif;
+  --font-text-size: 16px;
+  --line-height-normal: 1.7;
+  --file-line-width: 850px;
+  --h1-size: 2em;
+  --h2-size: 1.38em;
+  --h3-size: 1.15em;
+  --h1-font: var(--font-text);
+  --h2-font: var(--font-text);
+  --h1-color: var(--text-normal);
+  --h2-color: var(--text-normal);
+  --h3-color: var(--text-normal);
+  --nav-item-size: 14px;
+  --nav-item-padding: 5px 10px;
+  --nav-item-weight: 450;
+  --nav-item-weight-active: 550;
+  --tag-radius: 3px;
+  --tab-radius: 0px;
+  --tab-font-size: 12px;
+}
+.workspace-split.mod-left-split { background: var(--background-secondary); }
+.workspace-split.mod-left-split .workspace-leaf-content { background: var(--background-secondary); }
+.nav-files-container { padding: 12px 8px 12px 24px !important; }
+.nav-folder-title-content::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 16px;
+  vertical-align: -3px;
+  margin-inline-end: 8px;
+  background: var(--text-muted);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6' fill='none' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.nav-folder-title, .nav-file-title { border-radius: 4px; min-height: 29px; }
+.nav-folder-title { padding-inline-start: 24px !important; }
+.nav-folder-title-content, .nav-file-title-content { font-family: var(--font-interface); }
+.workspace-ribbon { background: var(--background-secondary); border-right: 1px solid var(--background-modifier-border); }
+.markdown-rendered h1 { font-family: var(--font-text); letter-spacing: -.025em; font-weight: 700; }
+.markdown-rendered h2 { border-bottom: 0; padding-bottom: 0; margin-top: 1.65em; }
+.metadata-container { border: 0; box-shadow: none; padding-inline: 0; }
+.markdown-rendered .callout { border-width: 0; border-radius: 4px; box-shadow: none; }
+.markdown-rendered table { border-collapse: collapse; font-size: .9em; }
+.markdown-rendered table :is(th,td) { border: 1px solid var(--background-modifier-border); padding: 8px 12px; }
+.markdown-rendered table th { background: var(--background-secondary); }
+.markdown-rendered pre { border: 0; border-radius: 4px; }
+.workspace-leaf-content:has(.shadcn-list-page) .inline-title { display: none !important; }
+.markdown-reading-view:has(.shadcn-list-page) .metadata-container { display: none !important; }
+.nav-folder-title-content, .nav-file-title-content { font-weight: 450; }
+.shadcn-list-page { --file-line-width: 1160px; --file-margins: 38px 72px; }
+.shadcn-list-page .metadata-container { display: none; }
+.shadcn-list-page h1 { font-size: 32px; margin: 0 0 24px; line-height: 1.3; }
+.shadcn-list-page.markdown-preview-view { padding: 0 !important; }
+.shadcn-list-page .markdown-preview-sizer { max-width: none !important; width: 100% !important; }
+.shadcn-list-page .markdown-preview-section { max-width: none !important; padding: 28px 100px 60px !important; }
+.shadcn-list-page .markdown-preview-section > .el-p:last-child { color: var(--text-muted); font-size: 12px; }
+.shadcn-note-database { width: 100%; margin: 0; color: var(--text-normal); }
+.shadcn-list-toolbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--background-modifier-border); min-height: 41px; gap: 14px; }
+.shadcn-list-tab { display: flex; align-items: center; gap: 7px; align-self: stretch; border-bottom: 2px solid var(--text-normal); padding: 6px 9px 10px; font-size: 14px; font-weight: 500; }
+.shadcn-control-icon { display: flex; align-items: center; }
+.shadcn-control-icon svg { width: 16px; height: 16px; }
+.shadcn-list-tools { display: flex; align-items: center; gap: 3px; padding-bottom: 8px; }
+.shadcn-note-database button { height: 29px; box-shadow: none; border-radius: 4px; font-family: var(--font-interface); font-size: 13px; }
+.shadcn-note-database .shadcn-text-control, .shadcn-note-database .shadcn-icon-control { color: var(--text-muted); background: transparent; border: 0; padding: 4px 8px; }
+.shadcn-note-database button.shadcn-text-control, .shadcn-note-database button.shadcn-icon-control { border: 0 !important; background: transparent !important; box-shadow: none !important; }
+.shadcn-note-database :is(.shadcn-text-control,.shadcn-icon-control):hover { background: var(--background-modifier-hover); }
+.shadcn-note-database .shadcn-add-note { color: #ffffff; background: var(--interactive-accent); border: 0; padding: 4px 15px; margin-left: 7px; }
+.shadcn-note-database .shadcn-add-note:hover { background: var(--interactive-accent-hover); }
+.shadcn-icon-control { display: inline-flex; align-items: center; justify-content: center; }
+.shadcn-icon-control svg { width: 16px; height: 16px; }
+.shadcn-note-row { display: grid; grid-template-columns: minmax(0,1fr) auto 158px; align-items: center; gap: 15px; min-height: 34px; padding: 4px 9px 4px 3px; border-radius: 3px; }
+.shadcn-note-row:hover, .shadcn-note-row:focus-within { background: var(--shadcn-row-hover); }
+.shadcn-note-row .shadcn-note-title { display: flex; min-width: 0; align-items: center; gap: 12px; color: var(--text-normal); text-decoration: none; border: 0; font-size: 14px; font-weight: 400; }
+.shadcn-note-row a.shadcn-note-title.internal-link { color: var(--text-normal) !important; text-decoration: none !important; border: 0 !important; }
+.shadcn-note-name { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.shadcn-page-icon { display: flex; flex: 0 0 18px; color: var(--text-muted); }
+.shadcn-page-icon svg { width: 18px; height: 18px; stroke-width: 1.6px; }
+.shadcn-note-tags { display: flex; gap: 5px; align-items: center; justify-content: flex-end; }
+.shadcn-gray-tag { color: var(--text-normal); background: var(--shadcn-tag-bg); border-radius: 3px; padding: 1px 6px; max-width: 100px; font-size: 11px; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shadcn-note-date { text-align: right; white-space: nowrap; font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.shadcn-list-count { font-size: 11px; color: var(--text-muted); padding: 12px 3px; }
+.shadcn-list-filters { display: flex; flex-wrap: wrap; gap: 18px; padding: 12px 7px; background: var(--background-secondary); margin: 10px 0; border-radius: 4px; }
+.shadcn-list-filters[hidden], .shadcn-list-search[hidden] { display: none; }
+.shadcn-list-filters label { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
+.shadcn-list-filters select { min-width: 120px; font-size: 12px; }
+.shadcn-list-search { padding: 9px 0; }
+.shadcn-list-search input { width: 100%; font-size: 13px; }
+.shadcn-list-empty { padding: 50px 15px; text-align: center; color: var(--text-muted); font-size: 14px; }
+.shadcn-note-database :is(a,button,input,select):focus-visible { outline: 2px solid var(--interactive-accent); outline-offset: 2px; }
+.shadcn-new-note-form { display: flex; flex-direction: column; gap: 18px; }
+.shadcn-new-note-form label { display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+.shadcn-new-note-form input, .shadcn-new-note-form select { width: 100%; }
+@media (max-width: 1100px) {
+  .shadcn-list-page .markdown-preview-section { padding: 24px 28px 50px !important; }
+}
+@media (max-width: 700px) {
+  .shadcn-list-page { --file-margins: 22px 18px; }
+  .shadcn-note-row { grid-template-columns: minmax(0,1fr) auto; gap: 8px; }
+  .shadcn-note-date { display: none; }
+  .shadcn-gray-tag { max-width: 76px; }
+  .shadcn-list-tools { gap: 0; }
+  .shadcn-note-database .shadcn-text-control { padding-inline: 6px; }
+}
+
+}

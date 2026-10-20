@@ -1,0 +1,10 @@
+{
+  "id": "shadcn-workspace",
+  "name": "Shadcn Workspace",
+  "version": "1.0.0",
+  "minAppVersion": "1.8.7",
+  "description": "Browse local notes with search, folder filters, sorting, and an optional Shadcn-inspired appearance.",
+  "author": "Clark Lei",
+  "authorUrl": "https://github.com/leoskey",
+  "isDesktopOnly": false
+}
