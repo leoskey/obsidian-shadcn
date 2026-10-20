@@ -1,4 +1,4 @@
-/* Shadcn Workspace by Clark Lei. See LICENSE and THIRD_PARTY_NOTICES.md. */
+/* Shadcn by Clark Lei. See LICENSE and THIRD_PARTY_NOTICES.md. */
 .shadcn-note-database { width: 100%; margin: 0; color: var(--text-normal); }
 .shadcn-list-toolbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--background-modifier-border); min-height: 41px; gap: 14px; }
 .shadcn-list-tab { display: flex; align-items: center; gap: 7px; align-self: stretch; border-bottom: 2px solid var(--text-normal); padding: 6px 9px 10px; font-size: 14px; font-weight: 500; }

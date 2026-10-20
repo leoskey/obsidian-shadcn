@@ -13,13 +13,13 @@ scoped = upstream + '\n' + appearance
 # A scope's root must use :scope explicitly; bare body selectors target descendants.
 scoped = re.sub(r'\bbody\b', ':scope', scoped)
 scoped = re.sub(r'(?<![\w:-])\.theme-(light|dark)', r':scope.theme-\1', scoped)
-css = '/* Shadcn Workspace by Clark Lei. See LICENSE and THIRD_PARTY_NOTICES.md. */\n'
+css = '/* Shadcn by Clark Lei. See LICENSE and THIRD_PARTY_NOTICES.md. */\n'
 css += (ROOT / 'list.css').read_text()
 css += '\n@scope (body.shadcn-workspace) {\n' + scoped + '\n}\n'
 (ROOT / 'styles.css').write_text(css)
 dist = ROOT / 'downloads'
 dist.mkdir(exist_ok=True)
-target = dist / f"{manifest['id']}-{manifest['version']}.zip"
+target = dist / f"shadcn-{manifest['version']}.zip"
 files = ['main.js', 'manifest.json', 'styles.css', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'README.md']
 with zipfile.ZipFile(target, 'w', zipfile.ZIP_DEFLATED) as archive:
     for name in files:

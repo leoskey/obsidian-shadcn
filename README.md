@@ -1,10 +1,8 @@
-# Shadcn Workspace
+# Shadcn
 
 由 **Clark Lei** 维护的 Obsidian 插件：一次安装，同时获得 Shadcn 风格外观和本地笔记列表，无需另装主题或 CSS 片段。
 
 This Obsidian plugin combines a Shadcn-inspired appearance with a live local note list. Install one plugin, with no separate theme download.
-
-![Shadcn Workspace 示例界面](images/preview.png)
 
 ## 功能
 
@@ -20,11 +18,11 @@ This Obsidian plugin combines a Shadcn-inspired appearance with a live local not
 
 目前尚未提交 Obsidian 社区目录审核，请手动安装：
 
-1. [下载安装包](https://github.com/leoskey/obsidian-shadcn/raw/refs/heads/main/downloads/shadcn-workspace-1.0.0.zip)，解压出 `shadcn-workspace` 文件夹。
+1. [下载安装包](https://github.com/leoskey/obsidian-shadcn/raw/refs/heads/main/downloads/shadcn-1.0.1.zip)，解压出 `shadcn-workspace` 文件夹。
 2. 将文件夹放入目标仓库的 `.obsidian/plugins/` 中。确认 `main.js`、`manifest.json`、`styles.css` 直接位于 `.obsidian/plugins/shadcn-workspace/`，避免多套一层目录。
 3. 保存编辑内容，完全退出并重新打开 Obsidian。
-4. 在「设置 → 第三方插件」按 Obsidian 提示允许社区插件，并启用 **Shadcn Workspace**。
-5. 按 Command / Control P，运行 **Shadcn Workspace: 打开全部笔记**，或点击左侧工具栏的列表图标。
+4. 在「设置 → 第三方插件」按 Obsidian 提示允许社区插件，并启用 **Shadcn**。
+5. 按 Command / Control P，运行 **Shadcn: 打开全部笔记**，或点击左侧工具栏的列表图标。
 
 插件首次运行该命令时会创建 `全部笔记.md`。已存在的同名文件不会被覆盖；若文件里没有列表代码块，插件会提示手动添加。
 
